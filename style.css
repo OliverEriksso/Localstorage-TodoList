@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: rgb(20, 20, 20);
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 1.5em;
+}
+.display-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.display-column {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    flex: 3;
+}
+.align-left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100%;
+    flex: 0.5;
+    margin-left: 10px;
+}
+#input-field2 {
+    height: 100px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+
+
+#task-list {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+    flex: 2;
+}
+#task-list h4, #finished-tasks h4 {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+.task-container {
+    background-color: gray;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+.task-title {
+    flex: 0.5;
+}
+.task-desc {
+    flex: 4;
+    max-height: auto;
+    overflow: hidden;
+}
+.task-button {
+    background-color: transparent;
+    border: none;
+    flex: 0.8;
+    cursor: pointer;
+}
+.task-button:hover {
+    transform: scale(1.08);
+}
+.task-finish {
+    display: flex;
+    justify-content: flex-end;
+}
+.task-remove {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#finished-tasks {
+    /* display: none; */
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+}
