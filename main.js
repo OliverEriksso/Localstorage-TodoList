@@ -93,6 +93,48 @@ function renderTask(task, isFinished) {
     } else {
         taskList.appendChild(taskContainer);
     }
+
+    document.getElementById("hide-desc").addEventListener("change", function() {
+        hideDescription(taskContainer, desc, title, this.checked);
+    })
+    document.getElementById("hide-added").addEventListener("change", function() {
+        hideAdded(taskList, this.checked);
+    })
+    document.getElementById("hide-finished").addEventListener("change", function() {
+        hideFinished(finishedTaskList, this.checked);
+    })
+}
+function hideDescription(container, desc, title, isChecked) {
+    if (isChecked) {
+        desc.style.display = "none"
+        container.style.height = "35px"
+        container.style.width = "auto"
+        title.style.border = "none";
+    } else {
+        desc.style.display = "block"
+        container.style.height = "200px"
+        title.style.borderBottom = "1px solid black";
+    }
+}
+function hideAdded(taskList, isChecked) {
+    const title = document.querySelector("#add-task-title");
+    if (isChecked) {
+        taskList.style.display = "none";
+        title.style.display = "none";
+    } else {
+        taskList.style.display = "flex";
+        title.style.display = "block";
+    }
+}
+function hideFinished(finishedTaskList, isChecked) {
+    const title = document.querySelector("#finish-task-title");
+    if (isChecked) {
+        finishedTaskList.style.display = "none";
+        title.style.display = "none";
+    } else {
+        finishedTaskList.style.display = "flex";
+        title.style.display = "block";
+    }
 }
 
 function saveToLocalStorage() {

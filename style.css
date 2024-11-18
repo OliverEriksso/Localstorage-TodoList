@@ -1,106 +1,107 @@
 body {
-    margin: 0;
-    padding: 0;
-    color: white;
-    background-color: rgb(20, 20, 20);
-    min-width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: row;
-    gap: 1.5em;
-    font-family: Helvetica;
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: rgb(20, 20, 20);
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 1.5em;
+  font-family: Helvetica;
 }
 .display-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .display-column {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    flex: 3;
-    max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex: 3;
+  max-width: 100%;
 }
 .align-left {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-left: 10px;
 }
 #input-field2 {
-    height: 100px;
-    text-align: left;
-    box-sizing: border-box;
+  height: 100px;
+  text-align: left;
+  box-sizing: border-box;
 }
 .align-left button {
-    margin: 5px;
+  margin: 5px;
 }
 .create-task-div, .settings-div {
-    display: flex;
-    flex-direction: column;
-    height: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 50%;
 }
-
+.data-req {
+  display: flex;
+  flex-direction: column;
+}
 
 
 #task-list, #finished-tasks {
-    display: flex;
-    flex-direction: row;
-    gap: 1.5em;
-    overflow-x: auto;
-    min-height: 250px;
-    max-height: 80vh;
-    flex: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  overflow-x: auto;
+  min-height: 250px;
+  max-height: 80vh;
+  flex: 2;
 }
 #task-list h4, #finished-tasks h4 {
-    margin: 0;
-    padding: 5px;
-    border-bottom: 1px solid black;
+  margin: 0;
+  padding: 5px;
+  border-bottom: 1px solid black;
 }
 .task-container {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  width: 200px; /* height is set in main.js */
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
 }
 .task-title {
-    flex: 0.5;
+  flex: 0.5;
 }
 .task-desc {
-    flex: 4;
-    max-height: auto;
-    overflow: hidden;
+  flex: 4;
+  max-height: auto;
+  overflow: hidden;
 }
 .task-button {
-    background-color: transparent;
-    border: none;
-    flex: 0.8;
-    cursor: pointer;
+  background-color: transparent;
+  border: none;
+  flex: 0.8;
+  cursor: pointer;
 }
 .task-button:hover {
-    transform: scale(1.08);
+  transform: scale(1.08);
 }
 .task-finish {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 .task-remove {
-    display: flex;
-    justify-content: flex-start;
+  display: flex;
+  justify-content: flex-start;
 }
 
 #finished-tasks {
-    /* display: none; */
-    display: flex;
-    flex-direction: row;
-    gap: 1.5em;
+  /* display: none; */
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
 }
 
 /* The switch - the box around the slider */

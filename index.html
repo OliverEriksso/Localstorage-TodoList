@@ -22,21 +22,21 @@
             <h1>Settings</h1>
             <div class="switch-btn">
                 <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" id="hide-desc">
                     <span class="slider round"></span>
                 </label>
                 <span>Hide description</span>
             </div>
             <div class="switch-btn">
                 <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" id="hide-added">
                     <span class="slider round"></span>
                 </label>
                 <span>Hide Added Tasks</span>
             </div>
             <div class="switch-btn">
                 <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" id="hide-finished">
                     <span class="slider round"></span>
                 </label>
                 <span>Hide Finished Tasks</span>
@@ -56,16 +56,16 @@
                 </select>
             </div>
         </div>
-        <div class="display-column">
+        <div class="data-req">
             <h3>Need to delete cache?</h3>
             <button>Download Data</button>
             <button>Upload Data</button>
         </div>
     </div>
     <div class="display-column"> 
-        <h1>Added Tasks</h1>
+        <h1 id="add-task-title">Added Tasks</h1>
         <div id="task-list"></div>
-        <h1>Finished Tasks</h1>
+        <h1 id="finish-task-title">Finished Tasks</h1>
         <div id="finished-tasks"></div>
     </div>
 </body>
