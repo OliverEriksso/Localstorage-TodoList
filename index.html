@@ -10,12 +10,57 @@
 </head>
 <body>
     <div class="align-left">
-        <h1>Tasks</h1>
-        <p>Enter Title:</p>
-        <input type="text" id="input-field" placeholder="Enter text">
-        <p>Enter description:</p>
-        <textarea type="text" id="input-field2" placeholder="Enter text"></textarea>
-        <button id="create-task">Create Task</button>
+        <div class="create-task-div">
+            <h1>Tasks</h1>
+            <p>Enter Title:</p>
+            <input type="text" id="input-field" placeholder="Enter text">
+            <p>Enter description:</p>
+            <textarea type="text" id="input-field2" placeholder="Enter text"></textarea>
+            <button id="create-task">Create Task</button>
+        </div>
+        <div class="settings-div">
+            <h1>Settings</h1>
+            <div class="switch-btn">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <span>Hide description</span>
+            </div>
+            <div class="switch-btn">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <span>Hide Added Tasks</span>
+            </div>
+            <div class="switch-btn">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <span>Hide Finished Tasks</span>
+            </div>
+
+            <div>
+                <h3>Select colors:</h3>
+                <select>
+                    <option>Red</option>
+                    <option>Blue</option>
+                    <option>Green</option>
+                </select>
+                <select>
+                    <option>Red</option>
+                    <option>Blue</option>
+                    <option>Green</option>
+                </select>
+            </div>
+        </div>
+        <div class="display-column">
+            <h3>Need to delete cache?</h3>
+            <button>Download Data</button>
+            <button>Upload Data</button>
+        </div>
     </div>
     <div class="display-column"> 
         <h1>Added Tasks</h1>

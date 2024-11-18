@@ -10,6 +10,7 @@ body {
     align-items: flex-start;
     flex-direction: row;
     gap: 1.5em;
+    font-family: Helvetica;
 }
 .display-row {
     display: flex;
@@ -27,8 +28,7 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    min-height: 100%;
-    flex: 0.5;
+    height: 100%;
     margin-left: 10px;
 }
 #input-field2 {
@@ -36,6 +36,15 @@ body {
     text-align: left;
     box-sizing: border-box;
 }
+.align-left button {
+    margin: 5px;
+}
+.create-task-div, .settings-div {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+}
+
 
 
 #task-list, #finished-tasks {
@@ -53,7 +62,6 @@ body {
     border-bottom: 1px solid black;
 }
 .task-container {
-    background-color: gray;
     border: 1px solid #ccc;
     padding: 1rem;
     width: 200px;
@@ -93,4 +101,68 @@ body {
     display: flex;
     flex-direction: row;
     gap: 1.5em;
+}
+
+/* The switch - the box around the slider */
+.switch-btn {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.switch-btn span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 24px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3.2px;
+  bottom: 3.2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
 }

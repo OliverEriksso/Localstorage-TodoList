@@ -46,6 +46,8 @@ function renderTask(task, isFinished) {
     
     if (isFinished) {
         taskContainer.style.backgroundColor = "darkgreen";
+    } else {
+        taskContainer.style.backgroundColor = "gray";
     }
 
     const title = document.createElement("h4");
