@@ -39,6 +39,78 @@ addTaskBtn.addEventListener("click", () => {
     });
 });
 
+function createTaskTitle(taskTitle) {
+    const title = document.createElement("h4");
+    title.classList.add("task-title");
+    title.textContent = taskTitle;
+    return title;
+}
+function createTaskDesc(taskDesc) {
+    const desc = document.createElement("p");
+    desc.classList.add("task-desc");
+    desc.textContent = taskDesc;
+    return desc;
+}
+function createRemoveTaskBtn(taskContainer, task, isFinished) {
+    const removeTask = document.createElement("button");
+    removeTask.textContent = "✖️";
+    removeTask.classList.add("task-button", "task-remove");
+    removeTask.addEventListener("click", () => {
+        const userConfirmed = confirm("Are you sure? This task will be lost forever")
+        if (userConfirmed) {
+            removeTheTask(taskContainer, task, isFinished);
+        }
+    });
+    return removeTask;
+}
+function createFinishTaskBtn(taskContainer, task) {
+    const finishTask = document.createElement("button");
+    finishTask.textContent = task.isFinished ? "☑️" : "✔️";
+    finishTask.classList.add("task-button", "task-finish");
+    finishTask.addEventListener("click", () => {
+        if (task.isFinished) {
+            moveTaskBack(taskContainer, task);
+        } else {
+            finishTheTask(taskContainer, task);
+        }
+    });
+    return finishTask;
+}
+function moveTaskBack(container, task) {
+    savedFinishedTasks = savedFinishedTasks.filter(t => t !== task);
+    task.isFinished = false;
+    savedAddedTasks.push(task);
+    finishedTaskList.removeChild(container);
+    renderTask(task, false);
+    saveToLocalStorage();
+}
+function finishTheTask(container, task) {
+    savedAddedTasks = savedAddedTasks.filter(t => t !== task);
+    task.isFinished = true;
+    savedFinishedTasks.push(task);
+    
+    taskList.removeChild(container);
+    renderTask(task, true);
+    saveToLocalStorage();
+}
+
+function removeTheTask(container, task, isFinished) {
+    if (isFinished) {
+        savedFinishedTasks = savedFinishedTasks.filter(t => t !== task);
+        finishedTaskList.removeChild(container);
+    } else {
+        savedAddedTasks = savedAddedTasks.filter(t => t !== task);
+        taskList.removeChild(container);
+    }
+    saveToLocalStorage();
+}
+function setupHideDesc(taskContainer, desc, title) {
+    const hideDescToggle = document.getElementById("hide-desc")
+    hideDescription(taskContainer, desc, title, hideDescToggle.checked);
+    hideDescToggle.addEventListener("change", function() {
+        hideDescription(taskContainer, desc, title, this.checked);
+    })
+}
 
 function renderTask(task, isFinished) {
     const taskContainer = document.createElement("div");
@@ -50,35 +122,12 @@ function renderTask(task, isFinished) {
         taskContainer.style.backgroundColor = "var(--default-box)";
     }
 
-    const title = document.createElement("h4");
-    title.classList.add("task-title");
-    title.textContent = task.title;
+    const title = createTaskTitle(task.title);
+    const desc = createTaskDesc(task.desc);
 
-    const desc = document.createElement("p");
-    desc.classList.add("task-desc");
-    desc.textContent = task.desc;
-
-    const removeTask = document.createElement("button");
-    removeTask.textContent = "✖️";
-    removeTask.classList.add("task-button", "task-remove");
-    removeTask.addEventListener("click", () => {
-        const userConfirmed = confirm("Are you sure? This task will be lost forever")
-        if (userConfirmed) {
-            removeTheTask(taskContainer, task, isFinished);
-        }
-    });
-
-    const finishTask = document.createElement("button");
-    finishTask.textContent = task.isFinished ? "☑️" : "✔️";
-    finishTask.classList.add("task-button", "task-finish");
-    finishTask.addEventListener("click", () => {
-        if (task.isFinished) {
-            moveTaskBack(taskContainer, task);
-        } else {
-            finishTheTask(taskContainer, task);
-        }
-    });
-
+    const removeTask = createRemoveTaskBtn(taskContainer, task, isFinished);
+    const finishTask = createFinishTaskBtn(taskContainer, task);
+    
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("display-row");
     buttonContainer.appendChild(removeTask);
@@ -94,15 +143,7 @@ function renderTask(task, isFinished) {
         taskList.appendChild(taskContainer);
     }
 
-    const hideDescToggle = document.getElementById("hide-desc")
-    if (hideDescToggle.checked) {
-        hideDescription(taskContainer, desc, title, true);
-    } else {
-        hideDescription(taskContainer, desc, title, false);
-    }
-    hideDescToggle.addEventListener("change", function() {
-        hideDescription(taskContainer, desc, title, this.checked);
-    })
+    setupHideDesc(taskContainer, desc, title);
     document.getElementById("hide-added").addEventListener("change", function() {
         hideAdded(taskList, this.checked);
     })
@@ -148,35 +189,6 @@ function hideFinished(finishedTaskList, isChecked) {
 function saveToLocalStorage() {
     localStorage.setItem("addedTasks", JSON.stringify(savedAddedTasks));
     localStorage.setItem("finishedTasks", JSON.stringify(savedFinishedTasks));
-}
-
-function moveTaskBack(container, task) {
-    savedFinishedTasks = savedFinishedTasks.filter(t => t !== task);
-    task.isFinished = false;
-    savedAddedTasks.push(task);
-    finishedTaskList.removeChild(container);
-    renderTask(task, false);
-    saveToLocalStorage();
-}
-function finishTheTask(container, task) {
-    savedAddedTasks = savedAddedTasks.filter(t => t !== task);
-    task.isFinished = true;
-    savedFinishedTasks.push(task);
-    
-    taskList.removeChild(container);
-    renderTask(task, true);
-    saveToLocalStorage();
-}
-
-function removeTheTask(container, task, isFinished) {
-    if (isFinished) {
-        savedFinishedTasks = savedFinishedTasks.filter(t => t !== task);
-        finishedTaskList.removeChild(container);
-    } else {
-        savedAddedTasks = savedAddedTasks.filter(t => t !== task);
-        taskList.removeChild(container);
-    }
-    saveToLocalStorage();
 }
 
 let selector = document.getElementById("color-select-added");
