@@ -44,16 +44,22 @@
 
             <div>
                 <h3>Select colors:</h3>
-                <select>
-                    <option>Red</option>
-                    <option>Blue</option>
-                    <option>Green</option>
-                </select>
-                <select>
-                    <option>Red</option>
-                    <option>Blue</option>
-                    <option>Green</option>
-                </select>
+                <div>
+                    Added:
+                    <select id="color-select-added">
+                        <option value="gray">Gray</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="purple">Purple</option>
+                    </select>
+                </div>
+                <div>
+                    Finished:
+                    <select id="color-select-finished"> 
+                        <option value="green">Green</option>
+                        <option value="orange">Orange</option>
+                        <option value="blue">Blue</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="data-req">
@@ -64,9 +70,15 @@
     </div>
     <div class="display-column"> 
         <h1 id="add-task-title">Added Tasks</h1>
-        <div id="task-list"></div>
+        <div id="task-list">
+            <div class="left-arrow arrow"><a><</a></div>
+            <div class="right-arrow arrow"><a>></a></div>
+        </div>
         <h1 id="finish-task-title">Finished Tasks</h1>
-        <div id="finished-tasks"></div>
+        <div id="finished-tasks">
+            <div class="left-arrow arrow"><a><</a></div>
+            <div class="right-arrow arrow"><a>></a></div>
+        </div>
     </div>
 </body>
 </html>

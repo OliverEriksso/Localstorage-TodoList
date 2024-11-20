@@ -45,9 +45,9 @@ function renderTask(task, isFinished) {
     taskContainer.classList.add("task-container");
     
     if (isFinished) {
-        taskContainer.style.backgroundColor = "darkgreen";
+        taskContainer.style.backgroundColor = "var(--finished-box)";
     } else {
-        taskContainer.style.backgroundColor = "gray";
+        taskContainer.style.backgroundColor = "var(--default-box)";
     }
 
     const title = document.createElement("h4");
@@ -94,7 +94,13 @@ function renderTask(task, isFinished) {
         taskList.appendChild(taskContainer);
     }
 
-    document.getElementById("hide-desc").addEventListener("change", function() {
+    const hideDescToggle = document.getElementById("hide-desc")
+    if (hideDescToggle.checked) {
+        hideDescription(taskContainer, desc, title, true);
+    } else {
+        hideDescription(taskContainer, desc, title, false);
+    }
+    hideDescToggle.addEventListener("change", function() {
         hideDescription(taskContainer, desc, title, this.checked);
     })
     document.getElementById("hide-added").addEventListener("change", function() {
@@ -104,15 +110,17 @@ function renderTask(task, isFinished) {
         hideFinished(finishedTaskList, this.checked);
     })
 }
+
 function hideDescription(container, desc, title, isChecked) {
     if (isChecked) {
-        desc.style.display = "none"
-        container.style.height = "35px"
-        container.style.width = "auto"
+        desc.style.display = "none";
+        container.style.height = "35px";
+        container.style.width = "auto";
         title.style.border = "none";
     } else {
-        desc.style.display = "block"
-        container.style.height = "200px"
+        desc.style.display = "flex";
+        container.style.height = "200px";
+        container.style.width = "200px";
         title.style.borderBottom = "1px solid black";
     }
 }
@@ -170,4 +178,59 @@ function removeTheTask(container, task, isFinished) {
     }
     saveToLocalStorage();
 }
+
+let selector = document.getElementById("color-select-added");
+selector.addEventListener("click", () => {
+    selector.addEventListener("change", () => {
+        switch (selector.value) {
+            case "gray":
+                document.body.classList.remove("yellow-tasks", "purple-tasks");
+                break;
+            case "yellow":
+                document.body.classList.add("yellow-tasks");
+                document.body.classList.remove("purple-tasks");
+                break;
+            case "purple":
+                document.body.classList.add("purple-tasks");
+                document.body.classList.remove("yellow-tasks");
+                break;
+        }
+    })
+})
+let selectorTwo = document.getElementById("color-select-finished");
+selectorTwo.addEventListener("click", () => {
+    selectorTwo.addEventListener("change", () => {
+        switch (selectorTwo.value) {
+            case "green":
+                document.body.classList.remove("orange-tasks", "blue-tasks");
+                break;
+            case "orange":
+                document.body.classList.add("orange-tasks");
+                document.body.classList.remove("blue-tasks");
+                break;
+            case "blue":
+                document.body.classList.add("blue-tasks");
+                document.body.classList.remove("orange-tasks");
+                break;
+        }
+    })
+})
 //Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt aut fugiat, in perspiciatis sequi, suscipit
+
+const MAX_ROW = 5;
+let CURRENT_ROW = 0;
+
+const rightArrow = document.getElementsByClassName("right-arrow")[0];
+rightArrow.addEventListener("click", () => {
+    updateCurrentRow();
+    console.log("hello")
+})
+const leftArrow = document.getElementsByClassName("left-arrow")[0];
+leftArrow.addEventListener("click", () => {
+    updateCurrentRow();
+    console.log("hello2")
+})
+
+function updateCurrentRow() {
+
+}

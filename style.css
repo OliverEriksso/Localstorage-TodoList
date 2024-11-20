@@ -1,3 +1,20 @@
+:root {
+  --default-box: gray;
+  --finished-box: darkgreen;
+}
+.yellow-tasks {
+  --default-box: rgb(170, 170, 0);
+}
+.purple-tasks {
+  --default-box: purple;
+}
+.orange-tasks {
+  --finished-box: orange;
+}
+.blue-tasks {
+  --finished-box: blue;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -57,6 +74,7 @@ body {
   min-height: 250px;
   max-height: 80vh;
   flex: 2;
+  overflow: hidden;
 }
 #task-list h4, #finished-tasks h4 {
   margin: 0;
@@ -166,4 +184,11 @@ input:checked + .slider:before {
 }
 .slider.round:before {
   border-radius: 50%;
+}
+
+.arrow {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
