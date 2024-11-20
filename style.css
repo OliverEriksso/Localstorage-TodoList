@@ -186,7 +186,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.arrow {
+.right-arrow, .left-arrow {
   font-size: 24px;
   display: flex;
   align-items: center;

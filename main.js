@@ -7,14 +7,36 @@ let isFinished = false;
 let savedAddedTasks = [];
 let savedFinishedTasks = [];
 
+let CURRENT_ROW = 0;
+let isNextRow = false;
+const ROW_MAX = 6;
+const totalPages = Math.ceil(savedAddedTasks.length / ROW_MAX); //MATH.CEIL BASICALLY ROUNDS UP NUMBERS, IF YOU GOT 17 TASKS YOU'D GET 2 ROWS BECAUSE 6 - 6 - 5, CEIL MAKES SURE THE LAST 5 ARE IN AN ADDITIONAL ROW
+
 document.addEventListener("DOMContentLoaded", () => {
     const loadedAddedTasks = JSON.parse(localStorage.getItem("addedTasks")) || [];
     const loadedFinishedTasks = JSON.parse(localStorage.getItem("finishedTasks")) || [];
     savedAddedTasks = loadedAddedTasks.filter(task => task.title && task.desc);
     savedFinishedTasks = loadedFinishedTasks.filter(task => task.title && task.desc);
-    savedAddedTasks.forEach(task => renderTask(task, false));
+    //savedAddedTasks.forEach(task => renderTask(task, false));
     savedFinishedTasks.forEach(task => renderTask(task, true));
+
+    paginateTasks(false);
+    paginateTasks(true);
 });
+
+function validateCurrentRow() { //THIS IS WHAT WE USE ALONGSIDE PAGINATETASKS INSTEAD OF RENDERTASK SO THE RIGHT ROW/TASKS IS ALWAYS BEING DISPLAYED RIGHT
+    const maxRows = Math.ceil(savedAddedTasks.length / ROW_MAX);
+    if (maxRows === 0) {
+        CURRENT_ROW = 0;
+        return;
+    }
+
+    if (CURRENT_ROW >= maxRows) {
+        CURRENT_ROW = maxRows - 1; 
+    } else if (CURRENT_ROW < 0) {
+        CURRENT_ROW = 0;
+    }
+}
 
 addTaskBtn.addEventListener("click", () => {
     const titleInput = document.getElementById("input-field").value;
@@ -30,7 +52,8 @@ addTaskBtn.addEventListener("click", () => {
         isFinished: false
     };
     savedAddedTasks.push(newTask);
-    renderTask(newTask, false);
+    validateCurrentRow();
+    paginateTasks();
     saveToLocalStorage();
 
     const allInputs = document.querySelectorAll("input, textarea");
@@ -70,8 +93,12 @@ function createFinishTaskBtn(taskContainer, task) {
     finishTask.addEventListener("click", () => {
         if (task.isFinished) {
             moveTaskBack(taskContainer, task);
+            validateCurrentRow();
+            paginateTasks();
         } else {
             finishTheTask(taskContainer, task);
+            validateCurrentRow();
+            paginateTasks();
         }
     });
     return finishTask;
@@ -102,6 +129,8 @@ function removeTheTask(container, task, isFinished) {
         savedAddedTasks = savedAddedTasks.filter(t => t !== task);
         taskList.removeChild(container);
     }
+    validateCurrentRow();
+    paginateTasks();
     saveToLocalStorage();
 }
 function setupHideDesc(taskContainer, desc, title) {
@@ -115,7 +144,6 @@ function setupHideDesc(taskContainer, desc, title) {
 function renderTask(task, isFinished) {
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
-    
     if (isFinished) {
         taskContainer.style.backgroundColor = "var(--finished-box)";
     } else {
@@ -229,20 +257,60 @@ selectorTwo.addEventListener("click", () => {
 })
 //Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt aut fugiat, in perspiciatis sequi, suscipit
 
-const MAX_ROW = 5;
-let CURRENT_ROW = 0;
-
-const rightArrow = document.getElementsByClassName("right-arrow")[0];
-rightArrow.addEventListener("click", () => {
-    updateCurrentRow();
-    console.log("hello")
-})
-const leftArrow = document.getElementsByClassName("left-arrow")[0];
-leftArrow.addEventListener("click", () => {
-    updateCurrentRow();
-    console.log("hello2")
-})
-
-function updateCurrentRow() {
-
+function goToNextRow() {
+    if (CURRENT_ROW < ROW_MAX - 1) {
+        const nextRowIndex =  (CURRENT_ROW + 1) * ROW_MAX;
+        if(nextRowIndex < savedAddedTasks.length) {
+            CURRENT_ROW++;
+            isNextRow = ((CURRENT_ROW + 1) * ROW_MAX) < savedAddedTasks.length;
+            paginateTasks();
+        }
+    }
 }
+function goToPrevRow() {
+    if (CURRENT_ROW > 0) {
+        CURRENT_ROW--;
+        paginateTasks();
+    }
+}
+
+function paginateTasks() {
+    while (taskList.firstChild) {
+        taskList.removeChild(taskList.firstChild);
+    }
+    const leftArrow = document.createElement("div");
+    leftArrow.classList.add("left-arrow");
+    leftArrow.textContent = "←";
+    leftArrow.addEventListener("click", goToPrevRow);
+    
+    const rightArrow = document.createElement("div");
+    rightArrow.classList.add("right-arrow");
+    rightArrow.textContent = "→";
+    rightArrow.addEventListener("click", goToNextRow);
+
+    taskList.appendChild(leftArrow);
+    taskList.appendChild(rightArrow);
+
+    const start = CURRENT_ROW * ROW_MAX;
+    const end = start + ROW_MAX;
+    const tasksDisplay = savedAddedTasks.slice(start, end);
+
+    tasksDisplay.forEach(task => renderTask(task, false));
+
+    updatePaginationButtons();
+    console.log(CURRENT_ROW)
+}
+
+function updatePaginationButtons() {
+    const nextButton = document.querySelector(".right-arrow");
+    const prevButton = document.querySelector(".left-arrow"); 
+
+    prevButton.disabled = CURRENT_ROW === 0;
+    nextButton.disabled = !isNextRow;
+}
+
+const rightArrows = document.querySelectorAll(".right-arrow"); //IF THERE WAS ONLY ONE RIGHT/LEFT ARROW WE COULD USE ELEMENTBYID, BUT SINCE THERE ARE SEVERAL WE NEED QUERYSELECTOR & FOREACH
+rightArrows.forEach(arrow => arrow.addEventListener("click", goToNextRow)); 
+
+const leftArrows = document.querySelectorAll(".left-arrow");
+leftArrows.forEach(arrow => arrow.addEventListener("click", goToPrevRow));
