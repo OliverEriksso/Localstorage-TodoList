@@ -8,6 +8,7 @@ let savedAddedTasks = [];
 let savedFinishedTasks = [];
 
 let CURRENT_ROW = 0;
+let CURRENT_ROW_FINISHED = 0;
 let isNextRow = false;
 const ROW_MAX = 6;
 const totalPages = Math.ceil(savedAddedTasks.length / ROW_MAX); //MATH.CEIL BASICALLY ROUNDS UP NUMBERS, IF YOU GOT 17 TASKS YOU'D GET 2 ROWS BECAUSE 6 - 6 - 5, CEIL MAKES SURE THE LAST 5 ARE IN AN ADDITIONAL ROW
@@ -18,10 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
     savedAddedTasks = loadedAddedTasks.filter(task => task.title && task.desc);
     savedFinishedTasks = loadedFinishedTasks.filter(task => task.title && task.desc);
     //savedAddedTasks.forEach(task => renderTask(task, false));
-    savedFinishedTasks.forEach(task => renderTask(task, true));
+    //savedFinishedTasks.forEach(task => renderTask(task, true));
 
-    paginateTasks(false);
-    paginateTasks(true);
+    paginateTasks();
+    paginateFinishedTasks(); 
+    
+    updateAddedTasksCounter();
 });
 
 function validateCurrentRow() { //THIS IS WHAT WE USE ALONGSIDE PAGINATETASKS INSTEAD OF RENDERTASK SO THE RIGHT ROW/TASKS IS ALWAYS BEING DISPLAYED RIGHT
@@ -60,6 +63,7 @@ addTaskBtn.addEventListener("click", () => {
     allInputs.forEach(input => {
         input.value = "";
     });
+    updateAddedTasksCounter();
 });
 
 function createTaskTitle(taskTitle) {
@@ -95,10 +99,12 @@ function createFinishTaskBtn(taskContainer, task) {
             moveTaskBack(taskContainer, task);
             validateCurrentRow();
             paginateTasks();
+            paginateFinishedTasks(); 
         } else {
             finishTheTask(taskContainer, task);
             validateCurrentRow();
             paginateTasks();
+            paginateFinishedTasks(); 
         }
     });
     return finishTask;
@@ -110,6 +116,8 @@ function moveTaskBack(container, task) {
     finishedTaskList.removeChild(container);
     renderTask(task, false);
     saveToLocalStorage();
+
+    updateAddedTasksCounter();
 }
 function finishTheTask(container, task) {
     savedAddedTasks = savedAddedTasks.filter(t => t !== task);
@@ -119,6 +127,8 @@ function finishTheTask(container, task) {
     taskList.removeChild(container);
     renderTask(task, true);
     saveToLocalStorage();
+
+    updateAddedTasksCounter();
 }
 
 function removeTheTask(container, task, isFinished) {
@@ -132,6 +142,8 @@ function removeTheTask(container, task, isFinished) {
     validateCurrentRow();
     paginateTasks();
     saveToLocalStorage();
+
+    updateAddedTasksCounter();
 }
 function setupHideDesc(taskContainer, desc, title) {
     const hideDescToggle = document.getElementById("hide-desc")
@@ -184,7 +196,7 @@ function hideDescription(container, desc, title, isChecked) {
     if (isChecked) {
         desc.style.display = "none";
         container.style.height = "35px";
-        container.style.width = "auto";
+        container.style.width = "200px";
         title.style.border = "none";
     } else {
         desc.style.display = "flex";
@@ -314,3 +326,61 @@ rightArrows.forEach(arrow => arrow.addEventListener("click", goToNextRow));
 
 const leftArrows = document.querySelectorAll(".left-arrow");
 leftArrows.forEach(arrow => arrow.addEventListener("click", goToPrevRow));
+
+function updateAddedTasksCounter() {
+    const addedTasksCounter = document.getElementById("added-tasks-counter");
+    addedTasksCounter.textContent = `Total Added: ${savedAddedTasks.length}`;
+
+    const finishedTasksCounter = document.getElementById("finished-tasks-counter");
+    finishedTasksCounter.textContent = `Total Finished: ${savedFinishedTasks.length}`;
+}
+
+
+function paginateFinishedTasks() {
+    while (finishedTaskList.firstChild) {
+        finishedTaskList.removeChild(finishedTaskList.firstChild);
+    }
+
+    const leftArrowFinished = document.createElement("div");
+    leftArrowFinished.classList.add("left-arrow");
+    leftArrowFinished.textContent = "←";
+    leftArrowFinished.addEventListener("click", goToPrevRowFinished);
+
+    const rightArrowFinished = document.createElement("div");
+    rightArrowFinished.classList.add("right-arrow");
+    rightArrowFinished.textContent = "→";
+    rightArrowFinished.addEventListener("click", goToNextRowFinished);
+
+    finishedTaskList.appendChild(leftArrowFinished);
+    finishedTaskList.appendChild(rightArrowFinished);
+
+    const start = CURRENT_ROW_FINISHED * ROW_MAX;
+    const end = start + ROW_MAX;
+    const tasksDisplay = savedFinishedTasks.slice(start, end);
+
+    tasksDisplay.forEach(task => renderTask(task, true));
+
+    updateFinishedPaginationButtons();
+}
+
+function goToNextRowFinished() {
+    if ((CURRENT_ROW_FINISHED + 1) * ROW_MAX < savedFinishedTasks.length) {
+        CURRENT_ROW_FINISHED++;
+        paginateFinishedTasks();
+    }
+}
+
+function goToPrevRowFinished() {
+    if (CURRENT_ROW_FINISHED > 0) {
+        CURRENT_ROW_FINISHED--;
+        paginateFinishedTasks();
+    }
+}
+
+function updateFinishedPaginationButtons() {
+    const nextButton = document.querySelector(".right-arrow");
+    const prevButton = document.querySelector(".left-arrow");
+
+    prevButton.disabled = CURRENT_ROW_FINISHED === 0;
+    nextButton.disabled = (CURRENT_ROW_FINISHED + 1) * ROW_MAX >= savedFinishedTasks.length;
+}
