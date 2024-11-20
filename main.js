@@ -10,8 +10,8 @@ let savedFinishedTasks = [];
 let CURRENT_ROW = 0;
 let CURRENT_ROW_FINISHED = 0;
 let isNextRow = false;
-const ROW_MAX = 6;
-const totalPages = Math.ceil(savedAddedTasks.length / ROW_MAX); //MATH.CEIL BASICALLY ROUNDS UP NUMBERS, IF YOU GOT 17 TASKS YOU'D GET 2 ROWS BECAUSE 6 - 6 - 5, CEIL MAKES SURE THE LAST 5 ARE IN AN ADDITIONAL ROW
+let ROW_MAX = 6;
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const loadedAddedTasks = JSON.parse(localStorage.getItem("addedTasks")) || [];
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function validateCurrentRow() { //THIS IS WHAT WE USE ALONGSIDE PAGINATETASKS INSTEAD OF RENDERTASK SO THE RIGHT ROW/TASKS IS ALWAYS BEING DISPLAYED RIGHT
-    const maxRows = Math.ceil(savedAddedTasks.length / ROW_MAX);
+    const maxRows = Math.ceil(savedAddedTasks.length / ROW_MAX); //MATH.CEIL BASICALLY ROUNDS UP NUMBERS, IF YOU GOT 17 TASKS YOU'D GET 2 ROWS BECAUSE 6 - 6 - 5, CEIL MAKES SURE THE LAST 5 ARE IN AN ADDITIONAL ROW
     if (maxRows === 0) {
         CURRENT_ROW = 0;
         return;
@@ -147,10 +147,37 @@ function removeTheTask(container, task, isFinished) {
 }
 function setupHideDesc(taskContainer, desc, title) {
     const hideDescToggle = document.getElementById("hide-desc")
+
+    hideDescToggle.replaceWith(hideDescToggle.cloneNode(true)); //SINCE WE PUT SETUPHIDE DESC IN RENDERTASKS IT'S PUT ON ALL TASKS, 
+                                                                //WE NEED TO MAKE SURE THERES ONLY 1, OTHERWISE PAGINATETASKS IS CALLED *(AMOUNT OF TASKS) EACH TIME
+    const newHideDescToggle = document.getElementById("hide-desc");
+
     hideDescription(taskContainer, desc, title, hideDescToggle.checked);
-    hideDescToggle.addEventListener("change", function() {
+    newHideDescToggle.addEventListener("change", function() {
         hideDescription(taskContainer, desc, title, this.checked);
+        ifDescHidden();
     })
+}
+function ifDescHidden() {
+    const hideDescToggle = document.getElementById("hide-desc");
+
+    if (hideDescToggle.checked) {
+        taskList.style.display = "grid";
+        taskList.style.gridTemplateColumns = "repeat(6, minmax(150px, 1fr))";
+        taskList.style.gap = "10px"; 
+        ROW_MAX = 18;
+    } else {
+        taskList.style.display = "flex";
+        taskList.style.flexDirection = "row";
+        taskList.style.gap = "24px";
+        ROW_MAX = 6;
+    }
+    taskList.textContent = "";
+    finishedTaskList.textContent = "";
+
+    validateCurrentRow(); 
+    paginateTasks(); 
+    paginateFinishedTasks(); 
 }
 
 function renderTask(task, isFinished) {
@@ -290,18 +317,14 @@ function paginateTasks() {
     while (taskList.firstChild) {
         taskList.removeChild(taskList.firstChild);
     }
-    const leftArrow = document.createElement("div");
-    leftArrow.classList.add("left-arrow");
-    leftArrow.textContent = "←";
-    leftArrow.addEventListener("click", goToPrevRow);
-    
-    const rightArrow = document.createElement("div");
-    rightArrow.classList.add("right-arrow");
-    rightArrow.textContent = "→";
-    rightArrow.addEventListener("click", goToNextRow);
+    const finishedDisplayRow = document.querySelector(".display-row:nth-child(3)");
 
-    taskList.appendChild(leftArrow);
-    taskList.appendChild(rightArrow);
+    finishedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
+
+    const leftArrow = createArrow("left", goToPrevRowFinished);
+    const rightArrow = createArrow("right", goToNextRowFinished);
+    finishedDisplayRow.appendChild(leftArrow);
+    finishedDisplayRow.appendChild(rightArrow);
 
     const start = CURRENT_ROW * ROW_MAX;
     const end = start + ROW_MAX;
@@ -335,24 +358,26 @@ function updateAddedTasksCounter() {
     finishedTasksCounter.textContent = `Total Finished: ${savedFinishedTasks.length}`;
 }
 
-
+function createArrow(direction, onClickHandler) {
+    const arrow = document.createElement("div");
+    arrow.classList.add(direction === "left" ? "left-arrow" : "right-arrow");
+    arrow.textContent = direction === "left" ? "←" : "→";
+    arrow.addEventListener("click", onClickHandler);
+    return arrow;
+}
 function paginateFinishedTasks() {
     while (finishedTaskList.firstChild) {
         finishedTaskList.removeChild(finishedTaskList.firstChild);
     }
 
-    const leftArrowFinished = document.createElement("div");
-    leftArrowFinished.classList.add("left-arrow");
-    leftArrowFinished.textContent = "←";
-    leftArrowFinished.addEventListener("click", goToPrevRowFinished);
+    const addedDisplayRow = document.querySelector(".display-row:nth-child(1)");
 
-    const rightArrowFinished = document.createElement("div");
-    rightArrowFinished.classList.add("right-arrow");
-    rightArrowFinished.textContent = "→";
-    rightArrowFinished.addEventListener("click", goToNextRowFinished);
+    addedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
 
-    finishedTaskList.appendChild(leftArrowFinished);
-    finishedTaskList.appendChild(rightArrowFinished);
+    const leftArrow = createArrow("left", goToPrevRow);
+    const rightArrow = createArrow("right", goToNextRow);
+    addedDisplayRow.appendChild(leftArrow);
+    addedDisplayRow.appendChild(rightArrow);
 
     const start = CURRENT_ROW_FINISHED * ROW_MAX;
     const end = start + ROW_MAX;
@@ -383,4 +408,18 @@ function updateFinishedPaginationButtons() {
 
     prevButton.disabled = CURRENT_ROW_FINISHED === 0;
     nextButton.disabled = (CURRENT_ROW_FINISHED + 1) * ROW_MAX >= savedFinishedTasks.length;
+}
+
+
+
+
+
+function downloadLocalStorage() {
+    const data = {
+        addedTasks: JSON.parse(localStorage.getItem("addedTasks")) || [],
+        finishedTasks: JSON.parse(localStorage.getItem("finishedTasks")) || []
+    };
+
+    const download = document.getElementById("download-data")
+    const upload = document.getElementById("upload-data")
 }

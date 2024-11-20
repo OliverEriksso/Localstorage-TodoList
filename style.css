@@ -189,6 +189,7 @@ input:checked + .slider:before {
 
 .right-arrow, .left-arrow {
   font-size: 24px;
+  height:  24px;
   display: flex;
   align-items: center;
   cursor: pointer;
