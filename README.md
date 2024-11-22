@@ -25,14 +25,12 @@ Clone the repository:
 
 bash
 git clone https://github.com/OliverEriksso/Localstorage-TodoList
+
 cd repo-url
 
-Install dependencies: Make sure to install the necessary libraries:
-
-bash
-npm install three
-Run the development server: Start the Vite server to view the project:
-
-bash
-npx vite
-Open your browser: After running the server, open your browser and navigate to http://localhost:3000.
+Install dependencies: 
+Make sure to install the necessary libraries:
+- npm install three
+- npx vite
+  
+Open your browser: After running the server, open your browser and navigate to the localhost (usually http://localhost:3000)
