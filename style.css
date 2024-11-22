@@ -18,8 +18,7 @@
 body {
   margin: 0;
   padding: 0;
-  color: white;
-  background-color: rgb(20, 20, 20);
+  color: black;
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -29,6 +28,17 @@ body {
   gap: 1.5em;
   font-family: Helvetica;
 }
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+
+
+
+
 .display-row {
   display: flex;
   flex-direction: row;
@@ -41,12 +51,16 @@ body {
   min-height: 100%;
   flex: 3;
   max-width: 100%;
+  backdrop-filter: blur(10px);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .align-left {
   display: flex;
   flex-direction: column;
   height: 100%;
   margin-left: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 #input-field2 {
   height: 100px;
