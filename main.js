@@ -165,11 +165,19 @@ function ifDescHidden() {
         taskList.style.display = "grid";
         taskList.style.gridTemplateColumns = "repeat(6, minmax(150px, 1fr))";
         taskList.style.gap = "10px"; 
+
+        finishedTaskList.style.display = "grid";
+        finishedTaskList.style.gridTemplateColumns = "repeat(6, minmax(150px, 1fr))";
+        finishedTaskList.style.gap = "10px"; 
         ROW_MAX = 18;
     } else {
         taskList.style.display = "flex";
         taskList.style.flexDirection = "row";
         taskList.style.gap = "24px";
+
+        finishedTaskList.style.display = "flex";
+        finishedTaskList.style.flexDirection = "row";
+        finishedTaskList.style.gap = "24px";
         ROW_MAX = 6;
     }
     taskList.textContent = "";
@@ -317,14 +325,14 @@ function paginateTasks() {
     while (taskList.firstChild) {
         taskList.removeChild(taskList.firstChild);
     }
-    const finishedDisplayRow = document.querySelector(".display-row:nth-child(3)");
+    const addedDisplayRow = document.querySelector("#added-display-row");
 
-    finishedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
+    addedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
 
-    const leftArrow = createArrow("left", goToPrevRowFinished);
-    const rightArrow = createArrow("right", goToNextRowFinished);
-    finishedDisplayRow.appendChild(leftArrow);
-    finishedDisplayRow.appendChild(rightArrow);
+    const leftArrow = createArrow("left", goToPrevRow);
+    const rightArrow = createArrow("right", goToNextRow);
+    addedDisplayRow.appendChild(leftArrow);
+    addedDisplayRow.appendChild(rightArrow);
 
     const start = CURRENT_ROW * ROW_MAX;
     const end = start + ROW_MAX;
@@ -343,12 +351,6 @@ function updatePaginationButtons() {
     prevButton.disabled = CURRENT_ROW === 0;
     nextButton.disabled = !isNextRow;
 }
-
-const rightArrows = document.querySelectorAll(".right-arrow"); //IF THERE WAS ONLY ONE RIGHT/LEFT ARROW WE COULD USE ELEMENTBYID, BUT SINCE THERE ARE SEVERAL WE NEED QUERYSELECTOR & FOREACH
-rightArrows.forEach(arrow => arrow.addEventListener("click", goToNextRow)); 
-
-const leftArrows = document.querySelectorAll(".left-arrow");
-leftArrows.forEach(arrow => arrow.addEventListener("click", goToPrevRow));
 
 function updateAddedTasksCounter() {
     const addedTasksCounter = document.getElementById("added-tasks-counter");
@@ -370,14 +372,14 @@ function paginateFinishedTasks() {
         finishedTaskList.removeChild(finishedTaskList.firstChild);
     }
 
-    const addedDisplayRow = document.querySelector(".display-row:nth-child(1)");
+    const finishedDisplayRow = document.querySelector("#finished-display-row");
 
-    addedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
+    finishedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
 
-    const leftArrow = createArrow("left", goToPrevRow);
-    const rightArrow = createArrow("right", goToNextRow);
-    addedDisplayRow.appendChild(leftArrow);
-    addedDisplayRow.appendChild(rightArrow);
+    const leftArrow = createArrow("left", goToPrevRowFinished);
+    const rightArrow = createArrow("right", goToNextRowFinished);
+    finishedDisplayRow.appendChild(leftArrow);
+    finishedDisplayRow.appendChild(rightArrow);
 
     const start = CURRENT_ROW_FINISHED * ROW_MAX;
     const end = start + ROW_MAX;
