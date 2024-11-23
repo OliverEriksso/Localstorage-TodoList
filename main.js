@@ -323,10 +323,16 @@ function removeMenu() {
         menu.style.display ="none";
         closeMenu.style.position ="static";
         closeMenu.style.marginTop = "1.5em"
+        ROW_MAX = ROW_MAX + 1;
+        paginateTasks();
+        paginateFinishedTasks();
     } else {
         menu.style.display ="flex";
         closeMenu.style.position ="fixed";
         closeMenu.style.marginTop = "0"
+        ROW_MAX = ROW_MAX - 1;
+        paginateTasks();
+        paginateFinishedTasks();
     }   
 }
 //Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt aut fugiat, in perspiciatis sequi, suscipit

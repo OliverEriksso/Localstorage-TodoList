@@ -51,20 +51,28 @@ function addBox() {
 }
 Array(200).fill().forEach(addBox);
 
-
+let isAnimating = true;
 
 function animate() {
-    requestAnimationFrame(animate);
-    allBoxes.forEach(box => {
-        box.rotation.x += 0.01;
-        box.rotation.y += 0.01;
-        box.rotation.z += 0.01;
-    })
-    camera.rotation.x += 0.001;
-    camera.rotation.y += 0.001;
-    camera.rotation.z += 0.001;
-    renderer.render(scene, camera)
+    if (isAnimating) {
+        requestAnimationFrame(animate);
+        allBoxes.forEach(box => {
+            box.rotation.x += 0.01;
+            box.rotation.y += 0.01;
+            box.rotation.z += 0.01;
+        })
+        camera.rotation.x += 0.001;
+        camera.rotation.y += 0.001;
+        camera.rotation.z += 0.001;
+        renderer.render(scene, camera)
+    }
 }
+
+document.getElementById("disable-anim").addEventListener("change", () => {
+    isAnimating = !isAnimating
+    if (isAnimating) animate();
+})
+
 if ( WebGL.isWebGL2Available() ) { //THIS IS FROM THE TOP, SO OLDER BROWSERS GET A WARNING
 	animate();
 } else {
