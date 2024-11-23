@@ -26,8 +26,8 @@ git clone https://github.com/OliverEriksso/Localstorage-TodoList
 
 Nodejs Install dependencies (THIS IS ONLY FOR 3D BACKGROUND):
 
-npm install three
-npx vite
+- npm install three
+- npx vite
 
 (OBS!) If you run npx vite and you see it's hosting on localhost, you open it and it's not connecting, try changing the port e.g to: npx vite --port 4000
 

@@ -313,6 +313,22 @@ selectorTwo.addEventListener("click", () => {
         }
     })
 })
+const closeMenu = document.getElementById("close-sett");
+closeMenu.addEventListener("click", removeMenu)
+let isMenuChecked = false;
+function removeMenu() {
+    isMenuChecked = !isMenuChecked;
+    const menu = document.querySelector(".align-left");
+    if (isMenuChecked) {
+        menu.style.display ="none";
+        closeMenu.style.position ="static";
+        closeMenu.style.marginTop = "1.5em"
+    } else {
+        menu.style.display ="flex";
+        closeMenu.style.position ="fixed";
+        closeMenu.style.marginTop = "0"
+    }   
+}
 //Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt aut fugiat, in perspiciatis sequi, suscipit
 
 function goToNextRow() {

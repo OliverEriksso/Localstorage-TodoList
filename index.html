@@ -11,9 +11,16 @@
 </head>
 <body>
     <canvas id="canvasbg"></canvas>
+    <div id="close-sett" class="display-column">
+        <p>-</p>
+        <p>-</p>
+        <p>-</p>
+    </div>
     <div class="align-left">
         <div class="create-task-div">
-            <h1>Tasks</h1>
+            <div class="display-row">
+                <h1>Tasks</h1>
+            </div>
             <p>Enter Title:</p>
             <input type="text" id="input-field" placeholder="Enter text">
             <p>Enter description:</p>
@@ -70,7 +77,7 @@
             <button id="upload-data">Upload Data</button>
         </div>
     </div>
-    <div class="display-column"> 
+    <div id="all-task-cont" class="display-column"> 
         <div id="added-display-row" class="display-row">
             <h1 id="add-task-title">Added Tasks</h1>
             <p id="added-tasks-counter">Total tasks:</p>
