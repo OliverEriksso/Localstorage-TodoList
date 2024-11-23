@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import WebGL from 'three/addons/capabilities/WebGL.js'; //THIS IS INCASE SOMEONE OPENS THIS ON AN OLDER BROWSER, AS RECOMMENDED BY THREEJS
 
 const scene = new THREE.Scene();
 
@@ -64,4 +65,9 @@ function animate() {
     camera.rotation.z += 0.001;
     renderer.render(scene, camera)
 }
-animate();
+if ( WebGL.isWebGL2Available() ) { //THIS IS FROM THE TOP, SO OLDER BROWSERS GET A WARNING
+	animate();
+} else {
+	const warning = WebGL.getWebGL2ErrorMessage();
+	document.getElementById( 'container' ).appendChild( warning );
+}

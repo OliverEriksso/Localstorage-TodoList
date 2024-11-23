@@ -10,6 +10,7 @@ let savedFinishedTasks = [];
 let CURRENT_ROW = 0;
 let CURRENT_ROW_FINISHED = 0;
 let isNextRow = false;
+let isNextRowFinished = false;
 let ROW_MAX = 6;
 
 
@@ -28,17 +29,27 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function validateCurrentRow() { //THIS IS WHAT WE USE ALONGSIDE PAGINATETASKS INSTEAD OF RENDERTASK SO THE RIGHT ROW/TASKS IS ALWAYS BEING DISPLAYED RIGHT
-    const maxRows = Math.ceil(savedAddedTasks.length / ROW_MAX); //MATH.CEIL BASICALLY ROUNDS UP NUMBERS, IF YOU GOT 17 TASKS YOU'D GET 2 ROWS BECAUSE 6 - 6 - 5, CEIL MAKES SURE THE LAST 5 ARE IN AN ADDITIONAL ROW
+    const maxRows = Math.ceil(savedAddedTasks.length / ROW_MAX);  //MATH.CEIL BASICALLY ROUNDS UP NUMBERS, IF YOU GOT 17 TASKS YOU'D GET 2 ROWS BECAUSE 6 - 6 - 5, CEIL MAKES SURE THE LAST 5 ARE IN AN ADDITIONAL ROW
     if (maxRows === 0) {
         CURRENT_ROW = 0;
         return;
     }
-
     if (CURRENT_ROW >= maxRows) {
         CURRENT_ROW = maxRows - 1; 
     } else if (CURRENT_ROW < 0) {
         CURRENT_ROW = 0;
     }
+
+    // const maxRowsFinished = Math.ceil(savedAddedTasks.length / ROW_MAX)
+    // if (maxRowsFinished === 0) {
+    //     CURRENT_ROW_FINISHED = 0;
+    //     return;
+    // }
+    // if (CURRENT_ROW_FINISHED >= maxRowsFinished) {
+    //     CURRENT_ROW_FINISHED = maxRowsFinished - 1; 
+    // } else if (CURRENT_ROW_FINISHED < 0) {
+    //     CURRENT_ROW_FINISHED = 0;
+    // }
 }
 
 addTaskBtn.addEventListener("click", () => {
@@ -163,11 +174,11 @@ function ifDescHidden() {
 
     if (hideDescToggle.checked) {
         taskList.style.display = "grid";
-        taskList.style.gridTemplateColumns = "repeat(6, minmax(150px, 1fr))";
+        taskList.style.gridTemplateColumns = "repeat(6, minmax(50px, 1fr))";
         taskList.style.gap = "10px"; 
 
         finishedTaskList.style.display = "grid";
-        finishedTaskList.style.gridTemplateColumns = "repeat(6, minmax(150px, 1fr))";
+        finishedTaskList.style.gridTemplateColumns = "repeat(6, minmax(50px, 1fr))";
         finishedTaskList.style.gap = "10px"; 
         ROW_MAX = 18;
     } else {
@@ -305,13 +316,10 @@ selectorTwo.addEventListener("click", () => {
 //Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt aut fugiat, in perspiciatis sequi, suscipit
 
 function goToNextRow() {
-    if (CURRENT_ROW < ROW_MAX - 1) {
-        const nextRowIndex =  (CURRENT_ROW + 1) * ROW_MAX;
-        if(nextRowIndex < savedAddedTasks.length) {
-            CURRENT_ROW++;
-            isNextRow = ((CURRENT_ROW + 1) * ROW_MAX) < savedAddedTasks.length;
-            paginateTasks();
-        }
+    const totalRows = Math.ceil(savedAddedTasks.length / ROW_MAX);
+    if (CURRENT_ROW < totalRows - 1) {
+        CURRENT_ROW++;
+        paginateTasks();    
     }
 }
 function goToPrevRow() {
@@ -326,7 +334,6 @@ function paginateTasks() {
         taskList.removeChild(taskList.firstChild);
     }
     const addedDisplayRow = document.querySelector("#added-display-row");
-
     addedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
 
     const leftArrow = createArrow("left", goToPrevRow);
@@ -373,7 +380,6 @@ function paginateFinishedTasks() {
     }
 
     const finishedDisplayRow = document.querySelector("#finished-display-row");
-
     finishedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
 
     const leftArrow = createArrow("left", goToPrevRowFinished);
@@ -391,7 +397,8 @@ function paginateFinishedTasks() {
 }
 
 function goToNextRowFinished() {
-    if ((CURRENT_ROW_FINISHED + 1) * ROW_MAX < savedFinishedTasks.length) {
+    const totalRows = Math.ceil(savedFinishedTasks.length / ROW_MAX);
+    if (CURRENT_ROW_FINISHED < totalRows - 1) {
         CURRENT_ROW_FINISHED++;
         paginateFinishedTasks();
     }
@@ -409,7 +416,7 @@ function updateFinishedPaginationButtons() {
     const prevButton = document.querySelector(".left-arrow");
 
     prevButton.disabled = CURRENT_ROW_FINISHED === 0;
-    nextButton.disabled = (CURRENT_ROW_FINISHED + 1) * ROW_MAX >= savedFinishedTasks.length;
+    nextButton.disabled = !isNextRowFinished;
 }
 
 
