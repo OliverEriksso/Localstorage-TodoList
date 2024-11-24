@@ -1,5 +1,7 @@
 This is a practice project To-do list! Here I test adding more complex features for practice! (OBS! Comments in scripts are mostly me organizing my thoughts/understanding)
 
+![image](https://github.com/user-attachments/assets/43f1f64a-8231-4a2c-a232-b29550d4825a)
+
 This project contains:
 
 - Create tasks, move them to Finished or back to added (as well as delete)
