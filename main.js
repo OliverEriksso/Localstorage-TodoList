@@ -352,11 +352,17 @@ function paginateTasks() {
         taskList.removeChild(taskList.firstChild);
     }
     const addedDisplayRow = document.querySelector("#added-display-row");
-    addedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
+    addedDisplayRow.querySelectorAll(".left-arrow, .right-arrow, .page-number").forEach(arrow => arrow.remove());
+
+    const pageNumber = document.createElement("p");
+    pageNumber.classList.add("page-number")
+    pageNumber.textContent = `Page: ${CURRENT_ROW + 1}`;
 
     const leftArrow = createArrow("left", goToPrevRow);
     const rightArrow = createArrow("right", goToNextRow);
+
     addedDisplayRow.appendChild(leftArrow);
+    addedDisplayRow.appendChild(pageNumber);
     addedDisplayRow.appendChild(rightArrow);
 
     const start = CURRENT_ROW * ROW_MAX;
@@ -398,11 +404,17 @@ function paginateFinishedTasks() {
     }
 
     const finishedDisplayRow = document.querySelector("#finished-display-row");
-    finishedDisplayRow.querySelectorAll(".left-arrow, .right-arrow").forEach(arrow => arrow.remove());
+    finishedDisplayRow.querySelectorAll(".left-arrow, .right-arrow, .page-number").forEach(arrow => arrow.remove());
+
+    const pageNumber = document.createElement("p");
+    pageNumber.classList.add("page-number")
+    pageNumber.textContent = `Page: ${CURRENT_ROW_FINISHED + 1}`;
 
     const leftArrow = createArrow("left", goToPrevRowFinished);
     const rightArrow = createArrow("right", goToNextRowFinished);
+
     finishedDisplayRow.appendChild(leftArrow);
+    finishedDisplayRow.appendChild(pageNumber);
     finishedDisplayRow.appendChild(rightArrow);
 
     const start = CURRENT_ROW_FINISHED * ROW_MAX;
