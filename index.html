@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
     <script type="module" src="threeD.js" defer></script>
+    <script src="localstorage.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
 </head>
 <body>
@@ -72,13 +73,12 @@
         <div class="data-req">
             <h3>Need to delete cache?</h3>
             <button id="download-data">Download Data</button>
-            <button id="upload-data">Upload Data</button>
+            Upload: <input type="file" id="upload-data" accept=".json">
         </div>
         <h3>Disable BG animation</h3>
         <div class="disable-ani">
             <p>Disable:</p>
             <input type="checkbox" id="disable-anim">
-            <label for="my-toggle"></label>
         </div>
     </div>
     <div id="all-task-cont" class="display-column"> 

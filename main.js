@@ -272,10 +272,6 @@ function hideFinished(finishedTaskList, isChecked) {
     }
 }
 
-function saveToLocalStorage() {
-    localStorage.setItem("addedTasks", JSON.stringify(savedAddedTasks));
-    localStorage.setItem("finishedTasks", JSON.stringify(savedFinishedTasks));
-}
 
 let selector = document.getElementById("color-select-added");
 selector.addEventListener("click", () => {
@@ -439,18 +435,4 @@ function updateFinishedPaginationButtons() {
 
     prevButton.disabled = CURRENT_ROW_FINISHED === 0;
     nextButton.disabled = !isNextRowFinished;
-}
-
-
-
-
-
-function downloadLocalStorage() {
-    const data = {
-        addedTasks: JSON.parse(localStorage.getItem("addedTasks")) || [],
-        finishedTasks: JSON.parse(localStorage.getItem("finishedTasks")) || []
-    };
-
-    const download = document.getElementById("download-data")
-    const upload = document.getElementById("upload-data")
 }
