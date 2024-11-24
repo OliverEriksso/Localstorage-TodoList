@@ -31,7 +31,6 @@ function addBox() {
     const box = new THREE.Mesh(geometry, material);
 
     let validPos = false;
-
     while (!validPos) {
         const [x, y, z] = Array(3)
             .fill()
@@ -39,11 +38,15 @@ function addBox() {
         
         box.position.set(x, y, z);
 
-        validPos = allBoxes.every(otherBox => {
+        const minBoxDistance = 6;
+        const boxesAreFarEnough = allBoxes.every(otherBox => {
             const distance = box.position.distanceTo(otherBox.position);
-            const minDistance = 6; 
-            return distance > minDistance;
+            return distance > minBoxDistance;
         });
+
+        const minCameraDistance = 10;
+        const cameraIsFarEnough = box.position.distanceTo(camera.position) > minCameraDistance;
+        validPos = boxesAreFarEnough && cameraIsFarEnough;
     }
 
     scene.add(box);

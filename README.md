@@ -1,4 +1,4 @@
-This is a practice project To-do list! Here I test adding more complex features for practice!
+This is a practice project To-do list! Here I test adding more complex features for practice! (OBS! Comments in scripts are mostly me organizing my thoughts/understanding)
 
 This project contains:
 
