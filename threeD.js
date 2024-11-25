@@ -20,7 +20,7 @@ directionalLight.position.set(10, 20, 10);
 
 scene.add(pointLight, ambientLight, directionalLight);
 
-const backgroundImg = new THREE.TextureLoader().load("./image.png");
+const backgroundImg = new THREE.TextureLoader().load("./Versions-Images/background.png");
 scene.background = backgroundImg;
 
 const allBoxes = [];

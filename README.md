@@ -1,9 +1,6 @@
 This is a practice project To-do list! Here I test adding more complex features for practice! (OBS! Comments in scripts are mostly me organizing my thoughts/understanding)
 
-![image](https://github.com/user-attachments/assets/d54aa2e6-42e8-4719-8477-52dfb406c80f)
-
-Visual Overhaul:
-![alt text](image-1.png)
+You can checkout the different versions of the project under Versions-Images folder! (Though I didn't take screenshots of the very earliest iteration)
 
 This project contains:
 

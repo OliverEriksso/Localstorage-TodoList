@@ -191,6 +191,7 @@ nav {
   flex-direction: row;
   gap: 1.3em;
   overflow-x: auto;
+  min-height: 250px;
   max-width: 1500px;
   overflow: hidden;
   margin-left: 3px;
