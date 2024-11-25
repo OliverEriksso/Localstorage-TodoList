@@ -7,25 +7,35 @@
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
     <script type="module" src="threeD.js" defer></script>
+    <script src="menu.js" defer></script>
     <script src="localstorage.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
 </head>
 <body>
+    <div id="dark-overlay"></div>
     <canvas id="canvasbg"></canvas>
-    <div id="close-sett" class="display-column">
-        <p>-</p>
-        <p>-</p>
-        <p>-</p>
-    </div>
-    <div class="align-left">
-        <div class="create-task-div">
-            <h1>Tasks</h1>
-            <p>Enter Title:</p>
-            <input type="text" id="input-field" placeholder="Enter text">
-            <p>Enter description:</p>
-            <textarea type="text" id="input-field2" placeholder="Enter text"></textarea>
-            <button id="create-task">Create Task</button>
+    <nav>
+        <div id="close-sett" class="display-column">
+            <p>-</p>
+            <p>-</p>
+            <p>-</p>
         </div>
+        Current Project Name 
+    </nav>
+
+    <div class="create-task-div">
+        <div id="h1-span-close" class="display-row">
+            <h1>Tasks</h1>
+            <span id="close-popup">X</span>
+        </div>
+        <p>Enter Title:</p>
+        <input type="text" id="input-field" placeholder="Enter text">
+        <p>Enter description:</p>
+        <textarea type="text" id="input-field2" placeholder="Enter text"></textarea>
+        <button id="create-task">Create Task</button>
+    </div>
+
+    <div class="align-left">
         <div class="settings-div">
             <h1>Settings</h1>
             <div class="switch-btn">
@@ -72,8 +82,8 @@
         </div>
         <div class="data-req">
             <h3>Need to clear cache?</h3>
-            <button id="download-data">Download Data</button>
-            Upload: <input type="file" id="upload-data" accept=".json">
+            Download Data: <button id="download-data">Download Data</button>
+            Restore Data: <input type="file" id="upload-data" accept=".json">
         </div>
         <h3>Disable BG animation</h3>
         <div class="disable-ani">
@@ -86,7 +96,10 @@
             <h1 id="add-task-title">Added Tasks</h1>
             <p id="added-tasks-counter">Total tasks:</p>
         </div>
-        <div id="task-list"></div>
+        <div class="display-row">
+            <div id="task-list"></div>
+            <div id="add-task">+</div>
+        </div>
         <div id="finished-display-row" class="display-row">
             <h1 id="finish-task-title">Finished Tasks</h1>
             <p id="finished-tasks-counter">Total tasks:</p>

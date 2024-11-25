@@ -18,15 +18,14 @@
 body {
   margin: 0;
   padding: 0;
-  color: black;
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  flex-direction: row;
-  gap: 1.5em;
   font-family: Helvetica;
+  flex-direction: column;
+  background-color: rgb(63, 63, 63);
 }
 canvas {
   position: fixed;
@@ -36,29 +35,47 @@ canvas {
   min-width: 100vw;
   min-height: 100vh;
 }
+#dark-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
 #close-sett {
   height: 35px;
   padding-left: 10px;
   padding-right: 10px;
   border: 1px solid black;
-  position: fixed;
   z-index: 100;
   left: 10em;
   top: 1.5em;
+  cursor: pointer;
 }
 #close-sett:hover {
   border-color: rgb(83, 83, 83);
   background-color: rgba(83, 83, 83, 0.3);
 }
-
 #close-sett p {
   margin: 0;
   line-height: 0.2em;
   font-size: 2.7em;
   border-radius: 30px;
+  pointer-events: none;
 }
-
+nav {
+  width: 100vw;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+}
 
 
 #all-task-cont {
@@ -66,58 +83,122 @@ canvas {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   flex: 3;
   min-height: 100%;
-  max-width: 100%;
+  width: 100vw;
 }
 .display-row {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 8em;
 }
 .display-column {
   display: flex;
   flex-direction: column;
 }
 .align-left {
-  display: flex;
+  opacity: 0;
+  visibility: hidden;
   flex-direction: column;
-  margin-left: 10px;
+  transform: translateX(-100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   backdrop-filter: blur(10px);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   height: 100vh;
   max-width: 300px;
+  z-index: 5;
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-size: 1.1em;
 }
+.align-left.open {
+  opacity: 1;
+  visibility: visible; /* Makes it interactive when visible */
+  transform: translateX(0); /* Slide into view */
+}
+
 .align-left h1, .align-left h3 {
   margin-bottom: 0.2em;
-}
-#input-field2 {
-  height: 100px;
-  text-align: left;
-  box-sizing: border-box;
 }
 .align-left button {
   margin: 5px;
 }
-.create-task-div, .settings-div {
+.settings-div {
   display: flex;
   flex-direction: column;
 }
-.data-req {
+
+
+
+#add-task {
+  height: 200px;
+  width: 80px;
+  padding: 1rem;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(119, 119, 119, 0.3);
+  cursor: pointer;
+  position: relative;
+  right: 10px;
+  margin-left: 5px;
+  transition: background-color 0.3s ease;
+}
+#add-task:hover {
+  background-color: rgba(119, 119, 119, 0.7);
+}
+.create-task-div {
+  display: none;
   flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  z-index: 6;
+  background-color: gray;
+  border: 1px solid darkgray;
+}
+.create-task-div h1 {
+  margin-bottom: 0;
+}
+#h1-span-close h1, #h1-span-close span {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#h1-span-close span {
+  position: relative;
+  left: 130%;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+#create-task {
+  margin-top: 1em;
+}
+#input-field {
+  max-width: 300px;
+}
+#input-field2 {
+  height: 100px;
+  max-width: 300px;
+  text-align: left;
+  box-sizing: border-box;
 }
 
 
 #task-list, #finished-tasks {
   display: flex;
   flex-direction: row;
-  gap: 1.5em;
+  gap: 1.3em;
   overflow-x: auto;
   min-height: 250px;
   max-height: 80vh;
-  flex: 2;
+  max-width: 1500;
   overflow: hidden;
   margin-left: 3px;
+  flex-grow: 0.5;
 }
 #task-list h4, #finished-tasks h4 {
   margin: 0;
@@ -156,12 +237,9 @@ canvas {
   display: flex;
   justify-content: flex-start;
 }
-
-#finished-tasks {
-  /* display: none; */
-  display: flex;
-  flex-direction: row;
-  gap: 1.5em;
+#added-display-row, #finished-display-row {
+  gap: 3em;
+  align-items: center;
 }
 
 /* The switch - the box around the slider */
@@ -241,8 +319,13 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
+.data-req {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #download-data, #upload-data {
-  width: 10em;
+  width: 14em;
   padding: 0;
-  margin: 0.3em 0;
+  margin: 1em 0;
 }

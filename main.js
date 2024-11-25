@@ -52,31 +52,6 @@ function validateCurrentRow() { //THIS IS WHAT WE USE ALONGSIDE PAGINATETASKS IN
     // }
 }
 
-addTaskBtn.addEventListener("click", () => {
-    const titleInput = document.getElementById("input-field").value;
-    const descInput = document.getElementById("input-field2").value;
-    if (!titleInput || !descInput) {
-        alert("Both title and description are required!");
-        return;
-    }
-
-    const newTask = {
-        title: titleInput,
-        desc: descInput,
-        isFinished: false
-    };
-    savedAddedTasks.push(newTask);
-    validateCurrentRow();
-    paginateTasks();
-    saveToLocalStorage();
-
-    const allInputs = document.querySelectorAll("input, textarea");
-    allInputs.forEach(input => {
-        input.value = "";
-    });
-    updateAddedTasksCounter();
-});
-
 function createTaskTitle(taskTitle) {
     const title = document.createElement("h4");
     title.classList.add("task-title");
@@ -244,11 +219,14 @@ function hideDescription(container, desc, title, isChecked) {
         container.style.height = "35px";
         container.style.width = "200px";
         title.style.border = "none";
+        taskList.style.gap ="1.3em"
     } else {
         desc.style.display = "flex";
         container.style.height = "200px";
         container.style.width = "200px";
         title.style.borderBottom = "1px solid black";
+        taskList.style.gap ="1.3em"
+
     }
 }
 function hideAdded(taskList, isChecked) {
@@ -309,28 +287,6 @@ selectorTwo.addEventListener("click", () => {
         }
     })
 })
-const closeMenu = document.getElementById("close-sett");
-closeMenu.addEventListener("click", removeMenu)
-let isMenuChecked = false;
-function removeMenu() {
-    isMenuChecked = !isMenuChecked;
-    const menu = document.querySelector(".align-left");
-    if (isMenuChecked) {
-        menu.style.display ="none";
-        closeMenu.style.position ="static";
-        closeMenu.style.marginTop = "1.5em"
-        ROW_MAX = ROW_MAX + 1;
-        paginateTasks();
-        paginateFinishedTasks();
-    } else {
-        menu.style.display ="flex";
-        closeMenu.style.position ="fixed";
-        closeMenu.style.marginTop = "0"
-        ROW_MAX = ROW_MAX - 1;
-        paginateTasks();
-        paginateFinishedTasks();
-    }   
-}
 //Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt aut fugiat, in perspiciatis sequi, suscipit
 
 function goToNextRow() {

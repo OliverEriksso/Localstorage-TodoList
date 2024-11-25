@@ -2,6 +2,9 @@ This is a practice project To-do list! Here I test adding more complex features 
 
 ![image](https://github.com/user-attachments/assets/43f1f64a-8231-4a2c-a232-b29550d4825a)
 
+Visual Overhaul:
+![alt text](image-1.png)
+
 This project contains:
 
 - Create tasks, move them to Finished or back to added (as well as delete)
@@ -24,6 +27,7 @@ Pain points:
 - Messy massive script
 - Next time I might try using JS classes (though I don't entirely know what that is)
 - A little bitof repetitive code
+- No media queries for smaller resolutions, or mobile versions etc
 
 Clone the repository:
 git clone https://github.com/OliverEriksso/Localstorage-TodoList
