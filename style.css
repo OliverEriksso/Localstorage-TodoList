@@ -137,9 +137,7 @@ nav {
   align-items: center;
   background-color: rgba(119, 119, 119, 0.3);
   cursor: pointer;
-  position: relative;
-  right: 10px;
-  margin-left: 5px;
+  margin-left: 1.2em;
   transition: background-color 0.3s ease;
 }
 #add-task:hover {
@@ -193,9 +191,7 @@ nav {
   flex-direction: row;
   gap: 1.3em;
   overflow-x: auto;
-  min-height: 250px;
-  max-height: 80vh;
-  max-width: 1500;
+  max-width: 1500px;
   overflow: hidden;
   margin-left: 3px;
   flex-grow: 0.5;

@@ -213,43 +213,6 @@ function renderTask(task, isFinished) {
     })
 }
 
-function hideDescription(container, desc, title, isChecked) {
-    if (isChecked) {
-        desc.style.display = "none";
-        container.style.height = "35px";
-        container.style.width = "200px";
-        title.style.border = "none";
-        taskList.style.gap ="1.3em"
-    } else {
-        desc.style.display = "flex";
-        container.style.height = "200px";
-        container.style.width = "200px";
-        title.style.borderBottom = "1px solid black";
-        taskList.style.gap ="1.3em"
-
-    }
-}
-function hideAdded(taskList, isChecked) {
-    const title = document.querySelector("#add-task-title");
-    if (isChecked) {
-        taskList.style.display = "none";
-        title.style.display = "none";
-    } else {
-        taskList.style.display = "flex";
-        title.style.display = "block";
-    }
-}
-function hideFinished(finishedTaskList, isChecked) {
-    const title = document.querySelector("#finish-task-title");
-    if (isChecked) {
-        finishedTaskList.style.display = "none";
-        title.style.display = "none";
-    } else {
-        finishedTaskList.style.display = "flex";
-        title.style.display = "block";
-    }
-}
-
 
 let selector = document.getElementById("color-select-added");
 selector.addEventListener("click", () => {
