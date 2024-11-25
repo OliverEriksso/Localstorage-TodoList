@@ -5,19 +5,16 @@ function closeTheMenu(event) {
     if (event.key === "Escape" || 
         (event.type === "click" && !menu.contains(event.target) && event.target !== closeMenu)) {
         menu.classList.remove("open");
-        closeMenu.style.visibility = "visible";
     }
 }
 
 closeMenu.addEventListener("click", function() {
     if (menu.classList.contains("open")) {
         menu.classList.remove("open");
-        closeMenu.style.visibility = "visible";
     } else {
         menu.classList.add("open");
-        closeMenu.style.visibility = "hidden";
-        document.addEventListener("keydown", closeTheMenu);
-        document.addEventListener("click", closeTheMenu);
+        // document.addEventListener("keydown", closeTheMenu);
+        // document.addEventListener("click", closeTheMenu);
     }
 });
 

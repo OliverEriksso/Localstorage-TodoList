@@ -21,11 +21,11 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: flex-start;
   font-family: Helvetica;
   flex-direction: column;
   background-color: rgb(63, 63, 63);
+  overflow-x: hidden;
 }
 canvas {
   position: fixed;
@@ -52,10 +52,9 @@ canvas {
   height: 35px;
   padding-left: 10px;
   padding-right: 10px;
+  margin-left: 3px;
   border: 1px solid black;
   z-index: 100;
-  left: 10em;
-  top: 1.5em;
   cursor: pointer;
 }
 #close-sett:hover {
@@ -75,6 +74,8 @@ nav {
   display: flex;
   align-items: center;
   gap: 1.2em;
+  background-color: rgb(31, 31, 31);
+  color: white;
 }
 
 
@@ -94,25 +95,20 @@ nav {
   flex-direction: column;
 }
 .align-left {
+  display: none;
   opacity: 0;
-  visibility: hidden;
+  background-color: rgb(73, 69, 69);
   flex-direction: column;
-  transform: translateX(-100%);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   height: 100vh;
   max-width: 300px;
   z-index: 5;
-  position: fixed;
-  left: 0;
-  top: 0;
+  position: static;
   font-size: 1.1em;
 }
 .align-left.open {
+  display: flex;
   opacity: 1;
-  visibility: visible; /* Makes it interactive when visible */
-  transform: translateX(0); /* Slide into view */
 }
 
 .align-left h1, .align-left h3 {

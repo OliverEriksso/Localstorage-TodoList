@@ -35,76 +35,79 @@
         <button id="create-task">Create Task</button>
     </div>
 
-    <div class="align-left">
-        <div class="settings-div">
-            <h1>Settings</h1>
-            <div class="switch-btn">
-                <label class="switch">
-                    <input type="checkbox" id="hide-desc">
-                    <span class="slider round"></span>
-                </label>
-                <span>Hide description</span>
-            </div>
-            <div class="switch-btn">
-                <label class="switch">
-                    <input type="checkbox" id="hide-added">
-                    <span class="slider round"></span>
-                </label>
-                <span>Hide Added Tasks</span>
-            </div>
-            <div class="switch-btn">
-                <label class="switch">
-                    <input type="checkbox" id="hide-finished">
-                    <span class="slider round"></span>
-                </label>
-                <span>Hide Finished Tasks</span>
-            </div>
-
-            <div>
-                <h3>Select colors:</h3>
-                <div>
-                    Added:
-                    <select id="color-select-added">
-                        <option value="gray">Gray</option>
-                        <option value="yellow">Yellow</option>
-                        <option value="purple">Purple</option>
-                    </select>
+    <div class="display-row">
+        <div class="align-left open">
+            <div class="settings-div">
+                <h1>Settings</h1>
+                <div class="switch-btn">
+                    <label class="switch">
+                        <input type="checkbox" id="hide-desc">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Hide description</span>
                 </div>
-                <div>
-                    Finished:
-                    <select id="color-select-finished"> 
-                        <option value="green">Green</option>
-                        <option value="orange">Orange</option>
-                        <option value="blue">Blue</option>
-                    </select>
+                <div class="switch-btn">
+                    <label class="switch">
+                        <input type="checkbox" id="hide-added">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Hide Added Tasks</span>
                 </div>
+                <div class="switch-btn">
+                    <label class="switch">
+                        <input type="checkbox" id="hide-finished">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Hide Finished Tasks</span>
+                </div>
+    
+                <div>
+                    <h3>Select colors:</h3>
+                    <div>
+                        Added:
+                        <select id="color-select-added">
+                            <option value="gray">Gray</option>
+                            <option value="yellow">Yellow</option>
+                            <option value="purple">Purple</option>
+                        </select>
+                    </div>
+                    <div>
+                        Finished:
+                        <select id="color-select-finished"> 
+                            <option value="green">Green</option>
+                            <option value="orange">Orange</option>
+                            <option value="blue">Blue</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="data-req">
+                <h3>Need to clear cache?</h3>
+                Download Data: <button id="download-data">Download Data</button>
+                Restore Data: <input type="file" id="upload-data" accept=".json">
+            </div>
+            <h3>Disable BG animation</h3>
+            <div class="disable-ani">
+                <p>Disable:</p>
+                <input type="checkbox" id="disable-anim">
             </div>
         </div>
-        <div class="data-req">
-            <h3>Need to clear cache?</h3>
-            Download Data: <button id="download-data">Download Data</button>
-            Restore Data: <input type="file" id="upload-data" accept=".json">
-        </div>
-        <h3>Disable BG animation</h3>
-        <div class="disable-ani">
-            <p>Disable:</p>
-            <input type="checkbox" id="disable-anim">
+        <div id="all-task-cont" class="display-column"> 
+            <div id="added-display-row" class="display-row">
+                <h1 id="add-task-title">Added Tasks</h1>
+                <p id="added-tasks-counter">Total tasks:</p>
+            </div>
+            <div class="display-row">
+                <div id="task-list"></div>
+                <div id="add-task">+</div>
+            </div>
+            <div id="finished-display-row" class="display-row">
+                <h1 id="finish-task-title">Finished Tasks</h1>
+                <p id="finished-tasks-counter">Total tasks:</p>
+            </div>
+            <div id="finished-tasks"></div>
         </div>
     </div>
-    <div id="all-task-cont" class="display-column"> 
-        <div id="added-display-row" class="display-row">
-            <h1 id="add-task-title">Added Tasks</h1>
-            <p id="added-tasks-counter">Total tasks:</p>
-        </div>
-        <div class="display-row">
-            <div id="task-list"></div>
-            <div id="add-task">+</div>
-        </div>
-        <div id="finished-display-row" class="display-row">
-            <h1 id="finish-task-title">Finished Tasks</h1>
-            <p id="finished-tasks-counter">Total tasks:</p>
-        </div>
-        <div id="finished-tasks"></div>
-    </div>
+    
 </body>
 </html>
